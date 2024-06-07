@@ -1,5 +1,4 @@
-import Directorio.AddressBook;
-
+package Directorio;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -16,11 +15,11 @@ public class Main {
 
         System.out.println("Directorio, por favor selecciona una opcion: ");
         printMenu();
+        AddressBook.load();
         int selectedOpt = 0;
 
         while (selectedOpt != 5) {
             selectedOpt = sc.nextInt();
-            AddressBook.load();
             switch (selectedOpt){
                 case 1:
                     AddressBook.list();

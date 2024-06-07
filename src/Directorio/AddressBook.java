@@ -1,11 +1,11 @@
-//import javax.xml.namespace.QName;
+package Directorio;//import javax.xml.namespace.QName;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
-    private static HashMap<String,String> directorio;
+    private static HashMap<String,String> directorio = new HashMap<String, String>();;
     final private static String fileName = "directorio.txt";
     static Scanner sc = new Scanner(System.in);
     static String newNum = sc.nextLine();
@@ -17,28 +17,13 @@ public class AddressBook {
         this.directorio = directorio;
     }
 
-    /*
-    //======================================= Setters =======================================
-    public void setDirectorio(HashMap<String, String> directorio) {
-        this.directorio = directorio;
-    }
-
-    //======================================= Getters =======================================
-    public HashMap<String, String> getDirectorio() {
-        return directorio;
-    }
-
-     */
 
     //======================================= Methods =======================================
-
     public static void load() throws IOException {
-        System.out.println("Esta entrando al load");
         FileReader fr =  new FileReader(fileName);
         BufferedReader br = new BufferedReader (fr);
         String currLine;
         while((currLine = br.readLine()) != null){
-            System.out.println("La linea que leyo dice: " + currLine);
             String [] rec = currLine.split(",",0);
             if (rec.length == 2){
                 directorio.put(rec[0], rec[1]);
@@ -49,12 +34,13 @@ public class AddressBook {
     public static void save(){
         try(FileWriter fw = new FileWriter(fileName, true);
             BufferedWriter bw = new BufferedWriter(fw);
-            PrintWriter out = new PrintWriter(bw))
+            PrintWriter outF = new PrintWriter(bw))
         {
             for (Map.Entry<String, String> entry : directorio.entrySet()) {
                 String k = entry.getKey();
                 String v = entry.getValue();
-                out.println(k + ", " + v + "\r\n");
+                outF.print(k + ", " + v + "\r");
+                outF.close();
             }
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
@@ -84,7 +70,8 @@ public class AddressBook {
             }
         }
         System.out.println("Ingrese el numero telefonico del nuevo contacto: ");
-
+        String newNum = sc.nextLine();
+        newNum = sc.nextLine();
         System.out.println("Ingrese el nombre del nuevo contacto: ");
         String newName = sc.nextLine();
         directorio.put(newNum, newName);
@@ -99,25 +86,14 @@ public class AddressBook {
     }
 
     public static void delete(){
-        if (directorio.isEmpty()){
-            try {
-                load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
         System.out.println("Ingrese el numero del contacto que desea borrar: " );
-        String delNum = sc.nextLine();
+        String delNum = sc.nextLine().trim();
+        System.out.println("Se recibe valor " + delNum);
         if(directorio.containsKey(delNum)){
-            System.out.printf("Se borro el contacto de %s%n", directorio.get(delNum));
+            System.out.println("Se borro el contacto de directorio");
             directorio.remove(delNum);
             save();
         }
-
-
-
-
-
     }
 
 }
